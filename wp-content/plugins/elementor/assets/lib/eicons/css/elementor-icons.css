@@ -1,7 +1,7 @@
 @font-face {
   font-family: "eicons";
-  src: url("/hedgecore/wp-content/plugins/elementor/assets/lib/eicons/fonts/eicons.eot?5_32_0");
-  src: url("/hedgecore/wp-content/plugins/elementor/assets/lib/eicons/fonts/eicons.eot?5_32_0#iefix") format("embedded-opentype"), url("/hedgecore/wp-content/plugins/elementor/assets/lib/eicons/fonts/eicons.woff2?5_32_0") format("woff2"), url("/hedgecore/wp-content/plugins/elementor/assets/lib/eicons/fonts/eicons.woff?5_32_0") format("woff"), url("/hedgecore/wp-content/plugins/elementor/assets/lib/eicons/fonts/eicons.ttf?5_32_0") format("truetype"), url("/hedgecore/wp-content/plugins/elementor/assets/lib/eicons/fonts/eicons.svg?5_32_0#eicon") format("svg");
+  src: url("/uadec/wp-content/plugins/elementor/assets/lib/eicons/fonts/eicons.eot?5_32_0");
+  src: url("/uadec/wp-content/plugins/elementor/assets/lib/eicons/fonts/eicons.eot?5_32_0#iefix") format("embedded-opentype"), url("/uadec/wp-content/plugins/elementor/assets/lib/eicons/fonts/eicons.woff2?5_32_0") format("woff2"), url("/uadec/wp-content/plugins/elementor/assets/lib/eicons/fonts/eicons.woff?5_32_0") format("woff"), url("/uadec/wp-content/plugins/elementor/assets/lib/eicons/fonts/eicons.ttf?5_32_0") format("truetype"), url("/uadec/wp-content/plugins/elementor/assets/lib/eicons/fonts/eicons.svg?5_32_0#eicon") format("svg");
   font-weight: normal;
   font-style: normal;
 }

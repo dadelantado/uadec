@@ -9,8 +9,8 @@
 
 <channel>
 	<title>uadec</title>
-	<atom:link href="/hedgecore/feed/" rel="self" type="application/rss+xml" />
-	<link>/hedgecore</link>
+	<atom:link href="/uadec/feed/" rel="self" type="application/rss+xml" />
+	<link>/uadec</link>
 	<description></description>
 	<lastBuildDate>Wed, 04 Dec 2024 02:09:53 +0000</lastBuildDate>
 	<language>en-US</language>
@@ -21,13 +21,13 @@
 	<generator>https://wordpress.org/?v=6.7.1</generator>
 	<item>
 		<title>Código PHP: Gestor de Tareas.</title>
-		<link>/hedgecore/2024/12/04/codigo-php-gestor-de-tareas/</link>
-					<comments>/hedgecore/2024/12/04/codigo-php-gestor-de-tareas/#respond</comments>
+		<link>/uadec/2024/12/04/codigo-php-gestor-de-tareas/</link>
+					<comments>/uadec/2024/12/04/codigo-php-gestor-de-tareas/#respond</comments>
 		
 		<dc:creator><![CDATA[lexi]]></dc:creator>
 		<pubDate>Wed, 04 Dec 2024 02:09:53 +0000</pubDate>
 				<category><![CDATA[Uncategorized]]></category>
-		<guid isPermaLink="false">/hedgecore/?p=202</guid>
+		<guid isPermaLink="false">/uadec/?p=202</guid>
 
 					<description><![CDATA[Este código sirve para gestionar tareas, categorías y responsables. 2. Código para insertar datos: 3. Código para editar: 4. Código para eliminar: 5. Código para opciones: 6. Código para las categorías: 7. Código index categorías haciendo uso de HTML y CSS. 8. Código responsables: 9. Código index responsables haciendo uso de HTML y CSS:]]></description>
 										<content:encoded><![CDATA[
@@ -835,20 +835,20 @@ $responsables = $responsables ?? [];
 </pre>
 ]]></content:encoded>
 					
-					<wfw:commentRss>/hedgecore/2024/12/04/codigo-php-gestor-de-tareas/feed/</wfw:commentRss>
+					<wfw:commentRss>/uadec/2024/12/04/codigo-php-gestor-de-tareas/feed/</wfw:commentRss>
 			<slash:comments>0</slash:comments>
 		
 		
 			</item>
 		<item>
 		<title>Código PHP: Mensajes</title>
-		<link>/hedgecore/2024/10/08/codigo-php-mensajes/</link>
-					<comments>/hedgecore/2024/10/08/codigo-php-mensajes/#respond</comments>
+		<link>/uadec/2024/10/08/codigo-php-mensajes/</link>
+					<comments>/uadec/2024/10/08/codigo-php-mensajes/#respond</comments>
 		
 		<dc:creator><![CDATA[lexi]]></dc:creator>
 		<pubDate>Tue, 08 Oct 2024 23:37:52 +0000</pubDate>
 				<category><![CDATA[Uncategorized]]></category>
-		<guid isPermaLink="false">/hedgecore/?p=183</guid>
+		<guid isPermaLink="false">/uadec/?p=183</guid>
 
 					<description><![CDATA[Este código te ayuda a mostrar cuando una persona tiene mensajes o no.]]></description>
 										<content:encoded><![CDATA[
@@ -868,20 +868,20 @@ if ($mensajes > 0){
 ?></pre>
 ]]></content:encoded>
 					
-					<wfw:commentRss>/hedgecore/2024/10/08/codigo-php-mensajes/feed/</wfw:commentRss>
+					<wfw:commentRss>/uadec/2024/10/08/codigo-php-mensajes/feed/</wfw:commentRss>
 			<slash:comments>0</slash:comments>
 		
 		
 			</item>
 		<item>
 		<title>Código PHP: Operadores</title>
-		<link>/hedgecore/2024/10/08/codigo-php-operadores/</link>
-					<comments>/hedgecore/2024/10/08/codigo-php-operadores/#respond</comments>
+		<link>/uadec/2024/10/08/codigo-php-operadores/</link>
+					<comments>/uadec/2024/10/08/codigo-php-operadores/#respond</comments>
 		
 		<dc:creator><![CDATA[lexi]]></dc:creator>
 		<pubDate>Tue, 08 Oct 2024 23:32:49 +0000</pubDate>
 				<category><![CDATA[Uncategorized]]></category>
-		<guid isPermaLink="false">/hedgecore/?p=179</guid>
+		<guid isPermaLink="false">/uadec/?p=179</guid>
 
 					<description><![CDATA[Este código te muestra algunos operadores matematicos.]]></description>
 										<content:encoded><![CDATA[
@@ -913,20 +913,20 @@ echo "La division de $numero1 y $numero2 es : $division";
 ?></pre>
 ]]></content:encoded>
 					
-					<wfw:commentRss>/hedgecore/2024/10/08/codigo-php-operadores/feed/</wfw:commentRss>
+					<wfw:commentRss>/uadec/2024/10/08/codigo-php-operadores/feed/</wfw:commentRss>
 			<slash:comments>0</slash:comments>
 		
 		
 			</item>
 		<item>
 		<title>Código PHP: Funciones</title>
-		<link>/hedgecore/2024/10/08/codigo-php-funciones/</link>
-					<comments>/hedgecore/2024/10/08/codigo-php-funciones/#respond</comments>
+		<link>/uadec/2024/10/08/codigo-php-funciones/</link>
+					<comments>/uadec/2024/10/08/codigo-php-funciones/#respond</comments>
 		
 		<dc:creator><![CDATA[lexi]]></dc:creator>
 		<pubDate>Tue, 08 Oct 2024 23:29:27 +0000</pubDate>
 				<category><![CDATA[Uncategorized]]></category>
-		<guid isPermaLink="false">/hedgecore/?p=176</guid>
+		<guid isPermaLink="false">/uadec/?p=176</guid>
 
 					<description><![CDATA[Este código te muestra algunas funciones para modificar el orden de sentencias.]]></description>
 										<content:encoded><![CDATA[
@@ -943,20 +943,20 @@ echo strtoupper ("canada"); //cambia a mayusculas
 ?></pre>
 ]]></content:encoded>
 					
-					<wfw:commentRss>/hedgecore/2024/10/08/codigo-php-funciones/feed/</wfw:commentRss>
+					<wfw:commentRss>/uadec/2024/10/08/codigo-php-funciones/feed/</wfw:commentRss>
 			<slash:comments>0</slash:comments>
 		
 		
 			</item>
 		<item>
 		<title>Código PHP: Vehículos</title>
-		<link>/hedgecore/2024/10/08/codigo-php-vehiculos/</link>
-					<comments>/hedgecore/2024/10/08/codigo-php-vehiculos/#respond</comments>
+		<link>/uadec/2024/10/08/codigo-php-vehiculos/</link>
+					<comments>/uadec/2024/10/08/codigo-php-vehiculos/#respond</comments>
 		
 		<dc:creator><![CDATA[lexi]]></dc:creator>
 		<pubDate>Tue, 08 Oct 2024 23:13:32 +0000</pubDate>
 				<category><![CDATA[Uncategorized]]></category>
-		<guid isPermaLink="false">/hedgecore/?p=169</guid>
+		<guid isPermaLink="false">/uadec/?p=169</guid>
 
 					<description><![CDATA[Este código sirve para poder registrar los datos de un vehículo.]]></description>
 										<content:encoded><![CDATA[
@@ -1001,20 +1001,20 @@ $Carro -> MostrarVehiculo();
 ?></pre>
 ]]></content:encoded>
 					
-					<wfw:commentRss>/hedgecore/2024/10/08/codigo-php-vehiculos/feed/</wfw:commentRss>
+					<wfw:commentRss>/uadec/2024/10/08/codigo-php-vehiculos/feed/</wfw:commentRss>
 			<slash:comments>0</slash:comments>
 		
 		
 			</item>
 		<item>
 		<title>Código PHP: Referencia</title>
-		<link>/hedgecore/2024/10/08/codigo-php-referencia/</link>
-					<comments>/hedgecore/2024/10/08/codigo-php-referencia/#respond</comments>
+		<link>/uadec/2024/10/08/codigo-php-referencia/</link>
+					<comments>/uadec/2024/10/08/codigo-php-referencia/#respond</comments>
 		
 		<dc:creator><![CDATA[lexi]]></dc:creator>
 		<pubDate>Tue, 08 Oct 2024 16:13:25 +0000</pubDate>
 				<category><![CDATA[Uncategorized]]></category>
-		<guid isPermaLink="false">/hedgecore/?p=167</guid>
+		<guid isPermaLink="false">/uadec/?p=167</guid>
 
 					<description><![CDATA[Este código te ayuda a arregla/acomodar en orden correcto nombres.]]></description>
 										<content:encoded><![CDATA[
@@ -1038,20 +1038,20 @@ $n3 = unfirst(strtolowe($n3));
 ?></pre>
 ]]></content:encoded>
 					
-					<wfw:commentRss>/hedgecore/2024/10/08/codigo-php-referencia/feed/</wfw:commentRss>
+					<wfw:commentRss>/uadec/2024/10/08/codigo-php-referencia/feed/</wfw:commentRss>
 			<slash:comments>0</slash:comments>
 		
 		
 			</item>
 		<item>
 		<title>Código PHP: Calificaciones</title>
-		<link>/hedgecore/2024/10/07/codigo-php-calificaciones/</link>
-					<comments>/hedgecore/2024/10/07/codigo-php-calificaciones/#respond</comments>
+		<link>/uadec/2024/10/07/codigo-php-calificaciones/</link>
+					<comments>/uadec/2024/10/07/codigo-php-calificaciones/#respond</comments>
 		
 		<dc:creator><![CDATA[lexi]]></dc:creator>
 		<pubDate>Mon, 07 Oct 2024 16:07:20 +0000</pubDate>
 				<category><![CDATA[Uncategorized]]></category>
-		<guid isPermaLink="false">/hedgecore/?p=154</guid>
+		<guid isPermaLink="false">/uadec/?p=154</guid>
 
 					<description><![CDATA[Este código te duce tu nivel de estudio en base a tu promedio]]></description>
 										<content:encoded><![CDATA[
@@ -1081,20 +1081,20 @@ if ($promedio &lt; 60){
 ?></pre>
 ]]></content:encoded>
 					
-					<wfw:commentRss>/hedgecore/2024/10/07/codigo-php-calificaciones/feed/</wfw:commentRss>
+					<wfw:commentRss>/uadec/2024/10/07/codigo-php-calificaciones/feed/</wfw:commentRss>
 			<slash:comments>0</slash:comments>
 		
 		
 			</item>
 		<item>
 		<title>Código PHP: Tabla del 12</title>
-		<link>/hedgecore/2024/10/02/codigo-php-tabla-del-12/</link>
-					<comments>/hedgecore/2024/10/02/codigo-php-tabla-del-12/#respond</comments>
+		<link>/uadec/2024/10/02/codigo-php-tabla-del-12/</link>
+					<comments>/uadec/2024/10/02/codigo-php-tabla-del-12/#respond</comments>
 		
 		<dc:creator><![CDATA[lexi]]></dc:creator>
 		<pubDate>Wed, 02 Oct 2024 15:39:29 +0000</pubDate>
 				<category><![CDATA[Uncategorized]]></category>
-		<guid isPermaLink="false">/hedgecore/?p=151</guid>
+		<guid isPermaLink="false">/uadec/?p=151</guid>
 
 					<description><![CDATA[Este código te genera la tabla del 12.]]></description>
 										<content:encoded><![CDATA[
@@ -1114,20 +1114,20 @@ while ($count &lt;= 12);
 ?></pre>
 ]]></content:encoded>
 					
-					<wfw:commentRss>/hedgecore/2024/10/02/codigo-php-tabla-del-12/feed/</wfw:commentRss>
+					<wfw:commentRss>/uadec/2024/10/02/codigo-php-tabla-del-12/feed/</wfw:commentRss>
 			<slash:comments>0</slash:comments>
 		
 		
 			</item>
 		<item>
 		<title>Código PHP: Funciones Nombres</title>
-		<link>/hedgecore/2024/10/02/codigo-php-funciones-nombres/</link>
-					<comments>/hedgecore/2024/10/02/codigo-php-funciones-nombres/#respond</comments>
+		<link>/uadec/2024/10/02/codigo-php-funciones-nombres/</link>
+					<comments>/uadec/2024/10/02/codigo-php-funciones-nombres/#respond</comments>
 		
 		<dc:creator><![CDATA[lexi]]></dc:creator>
 		<pubDate>Wed, 02 Oct 2024 15:35:20 +0000</pubDate>
 				<category><![CDATA[Uncategorized]]></category>
-		<guid isPermaLink="false">/hedgecore/?p=149</guid>
+		<guid isPermaLink="false">/uadec/?p=149</guid>
 
 					<description><![CDATA[Este código ayuda a acomodar nombres en la forma y orden correcto.]]></description>
 										<content:encoded><![CDATA[
@@ -1149,7 +1149,7 @@ return $n1 ." " . $n2 . " " . $n3;
 ?></pre>
 ]]></content:encoded>
 					
-					<wfw:commentRss>/hedgecore/2024/10/02/codigo-php-funciones-nombres/feed/</wfw:commentRss>
+					<wfw:commentRss>/uadec/2024/10/02/codigo-php-funciones-nombres/feed/</wfw:commentRss>
 			<slash:comments>0</slash:comments>
 		
 		
