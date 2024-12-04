@@ -1,0 +1,1158 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>uadec</title>
+	<atom:link href="/hedgecore/feed/" rel="self" type="application/rss+xml" />
+	<link>/hedgecore</link>
+	<description></description>
+	<lastBuildDate>Wed, 04 Dec 2024 02:09:53 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=6.7.1</generator>
+	<item>
+		<title>Código PHP: Gestor de Tareas.</title>
+		<link>/hedgecore/2024/12/04/codigo-php-gestor-de-tareas/</link>
+					<comments>/hedgecore/2024/12/04/codigo-php-gestor-de-tareas/#respond</comments>
+		
+		<dc:creator><![CDATA[lexi]]></dc:creator>
+		<pubDate>Wed, 04 Dec 2024 02:09:53 +0000</pubDate>
+				<category><![CDATA[Uncategorized]]></category>
+		<guid isPermaLink="false">/hedgecore/?p=202</guid>
+
+					<description><![CDATA[Este código sirve para gestionar tareas, categorías y responsables. 2. Código para insertar datos: 3. Código para editar: 4. Código para eliminar: 5. Código para opciones: 6. Código para las categorías: 7. Código index categorías haciendo uso de HTML y CSS. 8. Código responsables: 9. Código index responsables haciendo uso de HTML y CSS:]]></description>
+										<content:encoded><![CDATA[
+<p>Este código sirve para gestionar tareas, categorías y responsables.</p>
+
+
+
+<ol class="wp-block-list">
+<li>Código para la conexión:</li>
+</ol>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php
+//conexion_tarea.php
+
+$host = 'localhost';          
+$dbname = 'tareas_db';        
+$username = 'root';           
+$password = '';
+
+try {
+    // Crear una nueva instancia de PDO
+    $conn = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
+    
+    // Configurar el modo de error de PDO a excepciones
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    echo "Conexión exitosa";
+} catch (PDOException $e) {
+    // Capturar cualquier error en la conexión
+    echo "Error en la conexión: " . $e->getMessage();
+}
+?>
+</pre>
+
+
+
+<p>2. Código para insertar datos:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php 
+// insertar_tarea.php
+function añadirTarea($nombreTarea, $estado, $fechacreacion, $fechafinalizacion, $idcategoria, $idresponsable, $conn) {
+    // Consulta SQL con parámetros nombrados
+    $sql = "INSERT INTO tareas (nombretarea, estado, fechacreacion, fechafinalizacion, idcategoria, idresponsable) 
+            VALUES (:nombreTarea, :estado, :fechacreacion, :fechafinalizacion, :idcategoria, :idresponsable)";
+
+    try {
+        $stmt = $conn->prepare($sql);
+
+        // Bind de parámetros usando los nombres de parámetros correctos
+        $stmt->bindParam(':nombreTarea', $nombreTarea, PDO::PARAM_STR);
+        $stmt->bindParam(':estado', $estado, PDO::PARAM_STR);
+        $stmt->bindParam(':fechacreacion', $fechacreacion, PDO::PARAM_STR);
+        $stmt->bindParam(':fechafinalizacion', $fechafinalizacion, PDO::PARAM_STR);
+        $stmt->bindParam(':idcategoria', $idcategoria, PDO::PARAM_INT);
+        $stmt->bindParam(':idresponsable', $idresponsable, PDO::PARAM_INT);
+
+        // Ejecuta la consulta y muestra el resultado
+        if ($stmt->execute()) {
+            echo "Datos insertados correctamente";
+        } else {
+            echo "Error al insertar datos";
+        }
+    } catch (PDOException $e) {
+        echo "Error en la preparación de la consulta: " . $e->getMessage();
+    }
+}
+?>
+</pre>
+
+
+
+<p>3. Código para editar:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php 
+// editar_tarea.php
+function editarTarea($idTarea, $nombreTarea, $estado, $fechacreacion, $fechafinalizacion, $idcategoria, $idresponsable, $conn) {
+    // Consulta SQL para actualizar la tarea
+    $sql = "UPDATE tareas 
+            SET nombretarea = :nombreTarea, 
+                estado = :estado, 
+                fechacreacion = :fechacreacion, 
+                fechafinalizacion = :fechafinalizacion, 
+                idcategoria = :idcategoria, 
+                idresponsable = :idresponsable
+            WHERE idtarea = :idTarea";
+
+    try {
+        $stmt = $conn->prepare($sql);
+
+        // Bind de parámetros usando los nombres de parámetros
+        $stmt->bindParam(':idTarea', $idTarea, PDO::PARAM_INT);
+        $stmt->bindParam(':nombreTarea', $nombreTarea, PDO::PARAM_STR);
+        $stmt->bindParam(':estado', $estado, PDO::PARAM_STR);
+        $stmt->bindParam(':fechacreacion', $fechacreacion, PDO::PARAM_STR);
+        $stmt->bindParam(':fechafinalizacion', $fechafinalizacion, PDO::PARAM_STR);
+        $stmt->bindParam(':idcategoria', $idcategoria, PDO::PARAM_INT);
+        $stmt->bindParam(':idresponsable', $idresponsable, PDO::PARAM_INT);
+
+        // Ejecuta la consulta y muestra el resultado
+        if ($stmt->execute()) {
+            echo "Datos actualizados correctamente";
+        } else {
+            echo "Error al actualizar los datos";
+        }
+    } catch (PDOException $e) {
+        echo "Error en la preparación de la consulta: " . $e->getMessage();
+    }
+}
+?>
+</pre>
+
+
+
+<p>4. Código para eliminar:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php  
+// eliminar_tarea.php
+function eliminarTarea($idTarea, $conn) {
+    // Consulta SQL para eliminar la tarea
+    $sql = "DELETE FROM tareas WHERE idtarea = :idTarea";
+
+    try {
+        $stmt = $conn->prepare($sql);
+
+        // Bind del parámetro idTarea
+        $stmt->bindParam(':idTarea', $idTarea, PDO::PARAM_INT);
+
+        // Ejecuta la consulta y muestra el resultado
+        if ($stmt->execute()) {
+            echo "Tarea eliminada correctamente";
+        } else {
+            echo "Error al eliminar la tarea";
+        }
+    } catch (PDOException $e) {
+        echo "Error en la preparación de la consulta: " . $e->getMessage();
+    }
+}
+?></pre>
+
+
+
+<p>5. Código para opciones:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php
+include 'conexion_tarea.php';
+
+// Procesar el formulario para guardar o actualizar una tarea
+if (isset($_POST['guardar_tarea'])) {
+    $idtarea = $_POST['idtarea'] ?? null;
+    $nombretarea = $_POST['nombretarea'];
+    $estado = $_POST['estado'];
+    $fechacreacion = $_POST['fechacreacion'];
+    $fechafinalizacion = $_POST['fechafinalizacion'];
+    $idcategoria = $_POST['idcategoria'];
+    $idresponsable = $_POST['idresponsable'];
+
+    if ($idtarea) {
+        // Actualizar tarea existente
+        $query = "UPDATE tareas SET nombretarea = :nombretarea, estado = :estado, fechacreacion = :fechacreacion, fechafinalizacion = :fechafinalizacion, idcategoria = :idcategoria, idresponsable = :idresponsable WHERE idtarea = :idtarea";
+        $stmt = $conn->prepare($query);
+        $stmt->execute([
+            ':nombretarea' => $nombretarea,
+            ':estado' => $estado,
+            ':fechacreacion' => $fechacreacion,
+            ':fechafinalizacion' => $fechafinalizacion,
+            ':idcategoria' => $idcategoria,
+            ':idresponsable' => $idresponsable,
+            ':idtarea' => $idtarea
+        ]);
+    } else {
+        // Insertar nueva tarea
+        $query = "INSERT INTO tareas (nombretarea, estado, fechacreacion, fechafinalizacion, idcategoria, idresponsable) VALUES (:nombretarea, :estado, :fechacreacion, :fechafinalizacion, :idcategoria, :idresponsable)";
+        $stmt = $conn->prepare($query);
+        $stmt->execute([
+            ':nombretarea' => $nombretarea,
+            ':estado' => $estado,
+            ':fechacreacion' => $fechacreacion,
+            ':fechafinalizacion' => $fechafinalizacion,
+            ':idcategoria' => $idcategoria,
+            ':idresponsable' => $idresponsable
+        ]);
+    }
+}
+
+// Consultar las tareas actualizadas
+$tareas = $conn->query("
+    SELECT t.idtarea, t.nombretarea, t.estado, t.fechacreacion, t.fechafinalizacion,
+           c.nombre AS nombre_categoria, r.nombre AS nombre_responsable
+    FROM tareas t
+    JOIN categoria c ON t.idcategoria = c.idcategoria
+    JOIN responsable r ON t.idresponsable = r.idresponsable
+")->fetchAll(PDO::FETCH_ASSOC);
+
+// Consultar categorías y responsables
+$categorias = $conn->query("SELECT * FROM categoria")->fetchAll(PDO::FETCH_ASSOC);
+$responsables = $conn->query("SELECT * FROM responsable")->fetchAll(PDO::FETCH_ASSOC);
+?>
+
+&lt;!DOCTYPE html>
+&lt;html lang="es">
+&lt;head>
+    &lt;meta charset="UTF-8">
+    &lt;title>Gestión de Tareas&lt;/title>
+    &lt;style>
+        /* Estilos minimalistas en verde pastel */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3e9ff;
+            color: #4b306a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            margin: 0;
+            padding: 20px;
+        }
+        form, table {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 10px 0;
+            width: 100%;
+            max-width: 600px;
+        }
+        label {
+            color: #6b3fa0;
+            font-weight: bold;
+        }
+        input[type="text"], input[type="date"], select, button {
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #c7a9e8;
+            border-radius: 4px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #b18bd9;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #d5c5e3;
+        }
+        th {
+            background-color: #c9a9e0;
+        }
+        tr:nth-child(even) {
+            background-color: #f5ecff;
+        }
+    &lt;/style>
+&lt;/head>
+&lt;body>
+    &lt;h2>Gestión de Tareas&lt;/h2>
+
+    &lt;!-- Formulario para agregar o editar tarea -->
+    &lt;form action="opciones_tarea.php" method="post">
+        &lt;input type="hidden" name="idtarea" value="&lt;?= $tarea_editar['idtarea'] ?? '' ?>">
+        &lt;label>Nombre de la Tarea:&lt;/label>
+        &lt;input type="text" name="nombretarea" required value="&lt;?= $tarea_editar['nombretarea'] ?? '' ?>">
+
+        &lt;label>Estado:&lt;/label>
+        &lt;select name="estado">
+            &lt;option value="No iniciado" &lt;?= isset($tarea_editar) &amp;&amp; $tarea_editar['estado'] == 'No iniciado' ? 'selected' : '' ?>>No iniciado&lt;/option>
+            &lt;option value="En proceso" &lt;?= isset($tarea_editar) &amp;&amp; $tarea_editar['estado'] == 'En proceso' ? 'selected' : '' ?>>En proceso&lt;/option>
+            &lt;option value="Completado" &lt;?= isset($tarea_editar) &amp;&amp; $tarea_editar['estado'] == 'Completado' ? 'selected' : '' ?>>Completado&lt;/option>
+        &lt;/select>
+
+        &lt;label>Fecha de Creación:&lt;/label>
+        &lt;input type="date" name="fechacreacion" required value="&lt;?= $tarea_editar['fechacreacion'] ?? '' ?>">
+
+        &lt;label>Fecha de Finalización:&lt;/label>
+        &lt;input type="date" name="fechafinalizacion" value="&lt;?= $tarea_editar['fechafinalizacion'] ?? '' ?>">
+
+        &lt;label>Categoría:&lt;/label>
+        &lt;select name="idcategoria">
+            &lt;?php foreach ($categorias as $categoria): ?>
+                &lt;option value="&lt;?= $categoria['idcategoria'] ?>" &lt;?= isset($tarea_editar) &amp;&amp; $tarea_editar['idcategoria'] == $categoria['idcategoria'] ? 'selected' : '' ?>>
+                    &lt;?= $categoria['nombre'] ?>
+                &lt;/option>
+            &lt;?php endforeach; ?>
+        &lt;/select>
+
+        &lt;label>Responsable:&lt;/label>
+        &lt;select name="idresponsable">
+            &lt;?php foreach ($responsables as $responsable): ?>
+                &lt;option value="&lt;?= $responsable['idresponsable'] ?>" &lt;?= isset($tarea_editar) &amp;&amp; $tarea_editar['idresponsable'] == $responsable['idresponsable'] ? 'selected' : '' ?>>
+                    &lt;?= $responsable['nombre'] ?>
+                &lt;/option>
+            &lt;?php endforeach; ?>
+        &lt;/select>
+
+        &lt;button type="submit" name="guardar_tarea">&lt;?= isset($tarea_editar) ? 'Actualizar' : 'Guardar' ?> Tarea&lt;/button>
+    &lt;/form>
+
+    &lt;!-- Tabla de tareas -->
+    &lt;h2>Listado de Tareas&lt;/h2>
+    &lt;table>
+        &lt;tr>
+            &lt;th>ID&lt;/th>
+            &lt;th>Nombre&lt;/th>
+            &lt;th>Estado&lt;/th>
+            &lt;th>Fecha Creación&lt;/th>
+            &lt;th>Fecha Finalización&lt;/th>
+            &lt;th>Categoría&lt;/th>
+            &lt;th>Responsable&lt;/th>
+            &lt;th>Acciones&lt;/th>
+        &lt;/tr>
+        &lt;?php foreach ($tareas as $tarea): ?>
+            &lt;tr>
+                &lt;td>&lt;?= $tarea['idtarea'] ?>&lt;/td>
+                &lt;td>&lt;?= $tarea['nombretarea'] ?>&lt;/td>
+                &lt;td>&lt;?= $tarea['estado'] ?>&lt;/td>
+                &lt;td>&lt;?= $tarea['fechacreacion'] ?>&lt;/td>
+                &lt;td>&lt;?= $tarea['fechafinalizacion'] ?>&lt;/td>
+                &lt;td>&lt;?= $tarea['nombre_categoria'] ?>&lt;/td>
+                &lt;td>&lt;?= $tarea['nombre_responsable'] ?>&lt;/td>
+                &lt;td>
+                    &lt;a href="opciones_tarea.php?editar=&lt;?= $tarea['idtarea'] ?>">Editar&lt;/a> |
+                    &lt;a href="opciones_tarea.php?eliminar=&lt;?= $tarea['idtarea'] ?>" onclick="return confirm('¿Está seguro de eliminar esta tarea?')">Eliminar&lt;/a>
+                &lt;/td>
+            &lt;/tr>
+        &lt;?php endforeach; ?>
+    &lt;/table>
+&lt;/body>
+&lt;/html>
+</pre>
+
+
+
+<p>6. Código para las categorías:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php
+// Incluyendo la conexión a la base de datos
+include 'conexion_tarea.php';
+
+// Crear o actualizar categoría
+if (isset($_POST['guardar_categoria'])) {
+    $idcategoria = $_POST['idcategoria'] ?? null;
+    $nombre = $_POST['nombre'];
+
+    if ($idcategoria) {  // Actualizar categoría
+        $query = "UPDATE categoria SET nombre = :nombre WHERE idcategoria = :idcategoria";
+        $stmt = $conn->prepare($query);
+        $stmt->execute([':nombre' => $nombre, ':idcategoria' => $idcategoria]);
+    } else {  // Crear nueva categoría
+        $query = "INSERT INTO categoria (nombre) VALUES (:nombre)";
+        $stmt = $conn->prepare($query);
+        $stmt->execute([':nombre' => $nombre]);
+    }
+    header("Location: index_categoria.php");
+    exit;
+}
+
+// Eliminar categoría
+if (isset($_GET['eliminar'])) {
+    $idcategoria = $_GET['eliminar'];
+
+    // Verificar si existen tareas asociadas
+    $query_check = "SELECT COUNT(*) AS total FROM tareas WHERE idcategoria = :idcategoria";
+    $stmt_check = $conn->prepare($query_check);
+    $stmt_check->execute([':idcategoria' => $idcategoria]);
+    $result = $stmt_check->fetch(PDO::FETCH_ASSOC);
+
+    if ($result['total'] > 0) {
+        // Mostrar alerta si tiene tareas asociadas
+        echo "&lt;script>alert('No se puede eliminar la categoría porque tiene tareas asociadas.');&lt;/script>";
+    } else {
+        // Eliminar la categoría si no tiene tareas asociadas
+        $query = "DELETE FROM categoria WHERE idcategoria = :idcategoria";
+        $stmt = $conn->prepare($query);
+        $stmt->execute([':idcategoria' => $idcategoria]);
+        header("Location: index_categoria.php");
+        exit;
+    }
+}
+
+// Obtener los detalles de la categoría a editar
+$categoria = null;
+if (isset($_GET['editar'])) {
+    $idcategoria = $_GET['editar'];
+    $query = "SELECT * FROM categoria WHERE idcategoria = :idcategoria";
+    $stmt = $conn->prepare($query);
+    $stmt->execute([':idcategoria' => $idcategoria]);
+    $categoria = $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+// Listar todas las categorías
+$query = "SELECT * FROM categoria";
+$stmt = $conn->query($query);
+$categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?></pre>
+
+
+
+<p>7. Código index categorías haciendo uso de HTML y CSS.</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php
+include 'categoria.php';
+
+// Manejo del formulario para agregar o editar categorías
+if (isset($_POST['guardar_categoria'])) {
+    $idcategoria = $_POST['idcategoria'] ?? null;
+    $nombre = $_POST['nombre'];
+
+    if ($idcategoria) {
+        // Actualizar categoría existente
+        $query = "UPDATE categoria SET nombre = :nombre WHERE idcategoria = :idcategoria";
+        $stmt = $conn->prepare($query);
+        $stmt->execute([':nombre' => $nombre, ':idcategoria' => $idcategoria]);
+    } else {
+        // Insertar nueva categoría
+        $query = "INSERT INTO categoria (nombre) VALUES (:nombre)";
+        $stmt = $conn->prepare($query);
+        $stmt->execute([':nombre' => $nombre]);
+    }
+
+    header("Location: index_categoria.php");
+    exit();
+}
+
+// Manejo de eliminación de categorías
+if (isset($_GET['eliminar'])) {
+    $idcategoria = $_GET['eliminar'];
+
+    // Verificar si existen tareas asociadas
+    $query_check = "SELECT COUNT(*) AS total FROM tareas WHERE idcategoria = :idcategoria";
+    $stmt_check = $conn->prepare($query_check);
+    $stmt_check->execute([':idcategoria' => $idcategoria]);
+    $result = $stmt_check->fetch(PDO::FETCH_ASSOC);
+
+    if ($result['total'] > 0) {
+        // Mostrar alerta si hay tareas asociadas
+        echo "&lt;script>alert('No se puede eliminar la categoría porque tiene tareas asociadas.');&lt;/script>";
+    } else {
+        // Eliminar la categoría si no tiene tareas asociadas
+        $query = "DELETE FROM categoria WHERE idcategoria = :idcategoria";
+        $stmt = $conn->prepare($query);
+        $stmt->execute([':idcategoria' => $idcategoria]);
+
+        header("Location: index_categoria.php");
+        exit();
+    }
+}
+
+// Obtener categorías
+$query = "SELECT * FROM categoria";
+$stmt = $conn->query($query);
+$categorias = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Categoría en edición
+$categoria_editar = null;
+if (isset($_GET['editar'])) {
+    $idcategoria = $_GET['editar'];
+    $query = "SELECT * FROM categoria WHERE idcategoria = :idcategoria";
+    $stmt = $conn->prepare($query);
+    $stmt->execute([':idcategoria' => $idcategoria]);
+    $categoria_editar = $stmt->fetch(PDO::FETCH_ASSOC);
+}
+?>
+
+&lt;!DOCTYPE html>
+&lt;html lang="es">
+&lt;head>
+    &lt;meta charset="UTF-8">
+    &lt;title>Gestión de Categorías&lt;/title>
+    &lt;style>
+        /* Estilos minimalistas en tonos celestes */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e8f6fc;
+            color: #2c3e50;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+        form, table {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 10px 0;
+            width: 100%;
+            max-width: 600px;
+        }
+        label {
+            color: #2980b9;
+            font-weight: bold;
+        }
+        input[type="text"], button {
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #bcdff1;
+            border-radius: 4px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #dbe9f1;
+        }
+        th {
+            background-color: #aed6f1;
+        }
+        tr:nth-child(even) {
+            background-color: #f4f9fc;
+        }
+    &lt;/style>
+&lt;/head>
+&lt;body>
+    &lt;h2>Gestión de Categorías&lt;/h2>
+
+    &lt;!-- Formulario para agregar o editar categoría -->
+    &lt;form action="index_categoria.php" method="post">
+        &lt;input type="hidden" name="idcategoria" value="&lt;?= $categoria_editar['idcategoria'] ?? '' ?>">
+        &lt;label>Nombre de la Categoría:&lt;/label>
+        &lt;input type="text" name="nombre" required value="&lt;?= $categoria_editar['nombre'] ?? '' ?>">
+        &lt;button type="submit" name="guardar_categoria">&lt;?= isset($categoria_editar) ? 'Actualizar' : 'Guardar' ?> Categoría&lt;/button>
+    &lt;/form>
+
+    &lt;!-- Tabla de categorías -->
+    &lt;table>
+        &lt;tr>
+            &lt;th>ID&lt;/th>
+            &lt;th>Nombre&lt;/th>
+            &lt;th>Acciones&lt;/th>
+        &lt;/tr>
+        &lt;?php foreach ($categorias as $categoria): ?>
+            &lt;tr>
+                &lt;td>&lt;?= $categoria['idcategoria'] ?>&lt;/td>
+                &lt;td>&lt;?= $categoria['nombre'] ?>&lt;/td>
+                &lt;td>
+                    &lt;a href="index_categoria.php?editar=&lt;?= $categoria['idcategoria'] ?>">Editar&lt;/a> |
+                    &lt;a href="index_categoria.php?eliminar=&lt;?= $categoria['idcategoria'] ?>" onclick="return confirm('¿Estás seguro de eliminar esta categoría?')">Eliminar&lt;/a>
+                &lt;/td>
+            &lt;/tr>
+        &lt;?php endforeach; ?>
+    &lt;/table>
+&lt;/body>
+&lt;/html>
+</pre>
+
+
+
+<p>8. Código responsables:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php
+// responsable.php
+include 'conexion_tarea.php';
+
+// Crear o actualizar responsable
+if (isset($_POST['guardar_responsable'])) {
+    $idresponsable = $_POST['idresponsable'] ?? null;
+    $nombre = $_POST['nombre'];
+    $whatsapp = $_POST['whatsapp'];
+    $depto = $_POST['depto'];
+
+    if ($idresponsable) {  // Actualizar responsable
+        $query = "UPDATE responsable SET nombre = :nombre, whatsapp = :whatsapp, depto = :depto WHERE idresponsable = :idresponsable";
+        $stmt = $conn->prepare($query);
+        $stmt->execute([':nombre' => $nombre, ':whatsapp' => $whatsapp, ':depto' => $depto, ':idresponsable' => $idresponsable]);
+    } else {  // Crear nuevo responsable
+        $query = "INSERT INTO responsable (nombre, whatsapp, depto) VALUES (:nombre, :whatsapp, :depto)";
+        $stmt = $conn->prepare($query);
+        $stmt->execute([':nombre' => $nombre, ':whatsapp' => $whatsapp, ':depto' => $depto]);
+    }
+    header("Location: index_responsable.php");
+    exit;
+}
+
+// Eliminar responsable
+if (isset($_GET['eliminar'])) {
+    $idresponsable = $_GET['eliminar'];
+    $query = "DELETE FROM responsable WHERE idresponsable = :idresponsable";
+    $stmt = $conn->prepare($query);
+    $stmt->execute([':idresponsable' => $idresponsable]);
+    header("Location: index_responsable.php");
+    exit;
+}
+
+// Editar responsable
+$responsable = [];
+if (isset($_GET['editar'])) {
+    $idresponsable = $_GET['editar'];
+    $query = "SELECT * FROM responsable WHERE idresponsable = :idresponsable";
+    $stmt = $conn->prepare($query);
+    $stmt->execute([':idresponsable' => $idresponsable]);
+    $responsable = $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+// Listar responsables
+$query = "SELECT * FROM responsable";
+$stmt = $conn->query($query);
+$responsables = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
+</pre>
+
+
+
+<p>9. Código index responsables haciendo uso de HTML y CSS:</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php
+// index_responsable.php
+include 'responsable.php';
+
+// Verificamos si la variable $responsables está definida y es un array
+$responsables = $responsables ?? [];
+?>
+
+&lt;!DOCTYPE html>
+&lt;html lang="es">
+&lt;head>
+    &lt;meta charset="UTF-8">
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0">
+    &lt;title>Gestión de Responsables&lt;/title>
+    &lt;style>
+        /* Estilos en tonos pastel y diseño minimalista */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e8f5e9; /* Verde pastel claro */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #4f5b62; /* Gris oscuro */
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            max-width: 700px;
+            width: 100%;
+        }
+
+        h2 {
+            color: #388e3c; /* Verde oscuro pastel */
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            text-align: left;
+            font-size: 14px;
+            color: #4f5b62;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #cfd8dc;
+            border-radius: 5px;
+            background-color: #f1f8e9;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #66bb6a;
+            color: #ffffff;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #5aaf57;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e0e0e0;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #c8e6c9; /* Verde pastel */
+            color: #2e7d32;
+        }
+
+        td {
+            background-color: #fafafa;
+        }
+
+        td a {
+            color: #388e3c;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        td a:hover {
+            background-color: #c8e6c9;
+            color: #2e7d32;
+        }
+    &lt;/style>
+&lt;/head>
+&lt;body>
+
+&lt;div class="container">
+    &lt;h2>Gestión de Responsables&lt;/h2>
+
+    &lt;!-- Formulario para crear o editar responsable -->
+    &lt;form action="index_responsable.php" method="post">
+        &lt;input type="hidden" name="idresponsable" value="&lt;?= htmlspecialchars($responsable['idresponsable'] ?? '') ?>">
+        &lt;label>Nombre:&lt;/label>
+        &lt;input type="text" name="nombre" required value="&lt;?= htmlspecialchars($responsable['nombre'] ?? '') ?>">
+
+        &lt;label>Whatsapp:&lt;/label>
+        &lt;input type="number" name="whatsapp" pattern="\d+" value="&lt;?= htmlspecialchars($responsable['whatsapp'] ?? '') ?>">
+
+        &lt;label>Departamento:&lt;/label>
+        &lt;input type="text" name="depto" value="&lt;?= htmlspecialchars($responsable['depto'] ?? '') ?>">
+
+        &lt;button type="submit" name="guardar_responsable">&lt;?= isset($responsable['idresponsable']) ? 'Actualizar' : 'Agregar' ?> Responsable&lt;/button>
+    &lt;/form>
+
+    &lt;!-- Tabla para listar responsables -->
+    &lt;table>
+        &lt;thead>
+            &lt;tr>
+                &lt;th>Nombre&lt;/th>
+                &lt;th>Whatsapp&lt;/th>
+                &lt;th>Departamento&lt;/th>
+                &lt;th>Acciones&lt;/th>
+            &lt;/tr>
+        &lt;/thead>
+        &lt;tbody>
+            &lt;?php foreach ($responsables as $responsable): ?>
+                &lt;tr>
+                    &lt;td>&lt;?= htmlspecialchars($responsable['nombre']) ?>&lt;/td>
+                    &lt;td>&lt;?= htmlspecialchars($responsable['whatsapp']) ?>&lt;/td>
+                    &lt;td>&lt;?= htmlspecialchars($responsable['depto']) ?>&lt;/td>
+                    &lt;td>
+                        &lt;a href="index_responsable.php?editar=&lt;?= htmlspecialchars($responsable['idresponsable']) ?>">Editar&lt;/a>
+                        &lt;a href="index_responsable.php?eliminar=&lt;?= htmlspecialchars($responsable['idresponsable']) ?>" onclick="return confirm('¿Está seguro de eliminar este responsable?')">Eliminar&lt;/a>
+                    &lt;/td>
+                &lt;/tr>
+            &lt;?php endforeach; ?>
+        &lt;/tbody>
+    &lt;/table>
+&lt;/div>
+
+&lt;/body>
+&lt;/html>
+</pre>
+]]></content:encoded>
+					
+					<wfw:commentRss>/hedgecore/2024/12/04/codigo-php-gestor-de-tareas/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Código PHP: Mensajes</title>
+		<link>/hedgecore/2024/10/08/codigo-php-mensajes/</link>
+					<comments>/hedgecore/2024/10/08/codigo-php-mensajes/#respond</comments>
+		
+		<dc:creator><![CDATA[lexi]]></dc:creator>
+		<pubDate>Tue, 08 Oct 2024 23:37:52 +0000</pubDate>
+				<category><![CDATA[Uncategorized]]></category>
+		<guid isPermaLink="false">/hedgecore/?p=183</guid>
+
+					<description><![CDATA[Este código te ayuda a mostrar cuando una persona tiene mensajes o no.]]></description>
+										<content:encoded><![CDATA[
+<p>Este código te ayuda a mostrar cuando una persona tiene mensajes o no.</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php
+$mensajes = 145;
+
+if ($mensajes > 0){
+    echo "Tienes $mensajes mensajes";
+} else {
+    echo "No tienes mensajes";
+}
+
+?></pre>
+]]></content:encoded>
+					
+					<wfw:commentRss>/hedgecore/2024/10/08/codigo-php-mensajes/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Código PHP: Operadores</title>
+		<link>/hedgecore/2024/10/08/codigo-php-operadores/</link>
+					<comments>/hedgecore/2024/10/08/codigo-php-operadores/#respond</comments>
+		
+		<dc:creator><![CDATA[lexi]]></dc:creator>
+		<pubDate>Tue, 08 Oct 2024 23:32:49 +0000</pubDate>
+				<category><![CDATA[Uncategorized]]></category>
+		<guid isPermaLink="false">/hedgecore/?p=179</guid>
+
+					<description><![CDATA[Este código te muestra algunos operadores matematicos.]]></description>
+										<content:encoded><![CDATA[
+<p>Este código te muestra algunos operadores matematicos.</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php
+$numero1 = 10;
+$numero2 = 5;
+
+$suma = $numero1 + $numero2;
+$resta = $numero1 - $numero2;
+$multiplicacion = $numero1 * $numero2;
+$division = $numero1 / $numero2;
+
+
+echo "La suma de $numero1 y $numero2 es : $suma";
+echo "&lt;br>";
+echo "&lt;br>";
+echo "La resta de $numero1 y $numero2 es : $resta";
+echo "&lt;br>";
+echo "&lt;br>";
+echo "La multiplicación de $numero1 y $numero2 es : $multiplicacion";
+echo "&lt;br>";
+echo "&lt;br>";
+echo "La division de $numero1 y $numero2 es : $division";
+
+?></pre>
+]]></content:encoded>
+					
+					<wfw:commentRss>/hedgecore/2024/10/08/codigo-php-operadores/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Código PHP: Funciones</title>
+		<link>/hedgecore/2024/10/08/codigo-php-funciones/</link>
+					<comments>/hedgecore/2024/10/08/codigo-php-funciones/#respond</comments>
+		
+		<dc:creator><![CDATA[lexi]]></dc:creator>
+		<pubDate>Tue, 08 Oct 2024 23:29:27 +0000</pubDate>
+				<category><![CDATA[Uncategorized]]></category>
+		<guid isPermaLink="false">/hedgecore/?p=176</guid>
+
+					<description><![CDATA[Este código te muestra algunas funciones para modificar el orden de sentencias.]]></description>
+										<content:encoded><![CDATA[
+<p>Este código te muestra algunas funciones para modificar el orden de sentencias.</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php
+echo strrev ("Hola mundo"); //orden unverso
+echo "&lt;br>";
+echo str_repeat ("ring", 3); //repite cadena
+echo "&lt;br>";
+echo strtoupper ("canada"); //cambia a mayusculas
+?></pre>
+]]></content:encoded>
+					
+					<wfw:commentRss>/hedgecore/2024/10/08/codigo-php-funciones/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Código PHP: Vehículos</title>
+		<link>/hedgecore/2024/10/08/codigo-php-vehiculos/</link>
+					<comments>/hedgecore/2024/10/08/codigo-php-vehiculos/#respond</comments>
+		
+		<dc:creator><![CDATA[lexi]]></dc:creator>
+		<pubDate>Tue, 08 Oct 2024 23:13:32 +0000</pubDate>
+				<category><![CDATA[Uncategorized]]></category>
+		<guid isPermaLink="false">/hedgecore/?p=169</guid>
+
+					<description><![CDATA[Este código sirve para poder registrar los datos de un vehículo.]]></description>
+										<content:encoded><![CDATA[
+<p>Este código sirve para poder registrar los datos de un vehículo. </p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php
+class Vehiculos {
+    //Propiedades de la clase
+    public $Marca;
+    public $Modelo;
+    public $Color;
+    public $Tipo;
+    public $Puertas;
+    public $Precio;
+
+    //Constructor para iniciar los valores
+    public function __construct($Marca, $Modelo, $Color, $Tipo, $Puertas, $Precio){
+        $this -> Marca = $Marca;
+        $this -> Modelo = $Modelo;
+        $this -> Color = $Color;
+        $this -> Tipo = $Tipo;
+        $this -> Puertas = $Puertas;
+        $this -> Precio = $Precio;  
+    }
+
+    //Método para mostrar los datos del carro
+    public function MostrarVehiculo(){
+        echo "Marca: " . $this -> Marca . "&lt;br>";
+        echo "Modelo: " . $this -> Modelo . "&lt;br>";
+        echo "Color: " . $this -> Color . "&lt;br>";
+        echo "Tipo: " . $this -> Tipo . "&lt;br>";
+        echo "Número de puertas: " . $this -> Puertas . "&lt;br>";
+        echo "Precio: $" . number_format($this -> Precio, 2) . "&lt;br>";
+    }
+}
+
+// Ejemplo
+$Carro = new Vehiculos("Cadillac", "Coupe De Ville", "Verde", "idk", 2, 44768);
+$Carro -> MostrarVehiculo();
+?></pre>
+]]></content:encoded>
+					
+					<wfw:commentRss>/hedgecore/2024/10/08/codigo-php-vehiculos/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Código PHP: Referencia</title>
+		<link>/hedgecore/2024/10/08/codigo-php-referencia/</link>
+					<comments>/hedgecore/2024/10/08/codigo-php-referencia/#respond</comments>
+		
+		<dc:creator><![CDATA[lexi]]></dc:creator>
+		<pubDate>Tue, 08 Oct 2024 16:13:25 +0000</pubDate>
+				<category><![CDATA[Uncategorized]]></category>
+		<guid isPermaLink="false">/hedgecore/?p=167</guid>
+
+					<description><![CDATA[Este código te ayuda a arregla/acomodar en orden correcto nombres.]]></description>
+										<content:encoded><![CDATA[
+<p>Este código te ayuda a arregla/acomodar en orden correcto nombres.</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php
+$a1 = "ALEXA";
+$a2 = "cordova";
+$a3 = "castaÑEDA";
+echo $a1 . " " . $a2 . " " . $a3 . "&lt;br>";
+fix_names ($a1, $a2, $a3);
+echo $a1 . " " . $a2 . " " . $a3;
+
+function fix_names (&amp;$n1, &amp;$n2, &amp;$n3){
+$n1 = unfirst(strtolowe($n1));
+$n2 = unfirst(strtolowe($n2));
+$n3 = unfirst(strtolowe($n3));
+}
+?></pre>
+]]></content:encoded>
+					
+					<wfw:commentRss>/hedgecore/2024/10/08/codigo-php-referencia/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Código PHP: Calificaciones</title>
+		<link>/hedgecore/2024/10/07/codigo-php-calificaciones/</link>
+					<comments>/hedgecore/2024/10/07/codigo-php-calificaciones/#respond</comments>
+		
+		<dc:creator><![CDATA[lexi]]></dc:creator>
+		<pubDate>Mon, 07 Oct 2024 16:07:20 +0000</pubDate>
+				<category><![CDATA[Uncategorized]]></category>
+		<guid isPermaLink="false">/hedgecore/?p=154</guid>
+
+					<description><![CDATA[Este código te duce tu nivel de estudio en base a tu promedio]]></description>
+										<content:encoded><![CDATA[
+<p>Este código te duce tu nivel de estudio en base a tu promedio</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php
+$calificacion1 = 32;
+$calificacion2 = 54;
+$calificacion3 = 100;
+
+$promedio = ($calificacion1 + $calificacion2 + $calificacion3) / 3;
+
+echo "Tu promedio es: $promedio";
+echo "&lt;br>";
+
+if ($promedio &lt; 60){
+    echo "Reprobado :(";
+} else if ($promedio >=60 &amp;&amp; $promedio &lt;80){
+    echo "Estudia más";
+} else if ($promedio >= 80 &amp;&amp; $promedio &lt;100){
+    echo "Eres genial";
+} else {
+    echo "¡Eres un master!";
+}
+?></pre>
+]]></content:encoded>
+					
+					<wfw:commentRss>/hedgecore/2024/10/07/codigo-php-calificaciones/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Código PHP: Tabla del 12</title>
+		<link>/hedgecore/2024/10/02/codigo-php-tabla-del-12/</link>
+					<comments>/hedgecore/2024/10/02/codigo-php-tabla-del-12/#respond</comments>
+		
+		<dc:creator><![CDATA[lexi]]></dc:creator>
+		<pubDate>Wed, 02 Oct 2024 15:39:29 +0000</pubDate>
+				<category><![CDATA[Uncategorized]]></category>
+		<guid isPermaLink="false">/hedgecore/?p=151</guid>
+
+					<description><![CDATA[Este código te genera la tabla del 12.]]></description>
+										<content:encoded><![CDATA[
+<p>Este código te genera la tabla del 12.</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php
+$count = 1;
+
+while ($count &lt;= 12);
+{
+    echo "$count times 12 is " . $count * 12 . "&lt;br>";
+    ++$count;
+}
+
+?></pre>
+]]></content:encoded>
+					
+					<wfw:commentRss>/hedgecore/2024/10/02/codigo-php-tabla-del-12/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+		<item>
+		<title>Código PHP: Funciones Nombres</title>
+		<link>/hedgecore/2024/10/02/codigo-php-funciones-nombres/</link>
+					<comments>/hedgecore/2024/10/02/codigo-php-funciones-nombres/#respond</comments>
+		
+		<dc:creator><![CDATA[lexi]]></dc:creator>
+		<pubDate>Wed, 02 Oct 2024 15:35:20 +0000</pubDate>
+				<category><![CDATA[Uncategorized]]></category>
+		<guid isPermaLink="false">/hedgecore/?p=149</guid>
+
+					<description><![CDATA[Este código ayuda a acomodar nombres en la forma y orden correcto.]]></description>
+										<content:encoded><![CDATA[
+<p>Este código ayuda a acomodar nombres en la forma y orden correcto.</p>
+
+
+
+<pre class="EnlighterJSRAW" data-enlighter-language="php" data-enlighter-theme="atomic" data-enlighter-highlight="" data-enlighter-linenumbers="" data-enlighter-lineoffset="" data-enlighter-title="" data-enlighter-group="">&lt;?php
+echo arreglarNombres("ALEXA", "cordova", "castañEDA");
+//declaramos la función con parámetros
+function arreglarNombres($n1, $n2, $n3){
+// usamos la funcion Srttolower - minusculas
+//despues la funcion ucfirst para poner el primer caracter en mayusculas
+$n1 = ucfirst(strtolower($n1));
+$n2 = ucfirst(strtolower($n2));
+$n3 = ucfirst(strtolower($n3));
+return $n1 ." " . $n2 . " " . $n3;
+}
+?></pre>
+]]></content:encoded>
+					
+					<wfw:commentRss>/hedgecore/2024/10/02/codigo-php-funciones-nombres/feed/</wfw:commentRss>
+			<slash:comments>0</slash:comments>
+		
+		
+			</item>
+	</channel>
+</rss>
